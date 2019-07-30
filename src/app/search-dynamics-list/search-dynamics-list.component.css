@@ -1,0 +1,89 @@
+
+
+#searchResults.hidden {
+    overflow: hidden;
+    height: 0; opacity: 0;
+    transition: height 0ms 400ms, opacity 400ms 0ms;
+  }
+  
+  #searchResults.visible {
+    height: 100%; opacity: 1;
+    transition: height 0ms 0ms, opacity 600ms 0ms;
+  }
+  
+  .clearField {
+    position: absolute;
+    top: 2px;
+    right: 50px;
+    z-index: 10;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+  }
+  
+  .clearField:hover {
+    cursor: pointer;
+  }
+  
+  .list-group-item {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    cursor: pointer;
+    outline: none;
+    padding-right: 15px;
+  }
+  
+  .list-group-item small {
+    color: #6c757d;
+  }
+  
+  .list-group-item small i {
+    padding: 5px;
+    font-weight: 300;
+  }
+  
+  .list-group-item:hover small {
+    color: #6c757d;
+  }
+  
+  .list-group-item:hover {
+    color: #007bff;
+    background-color: rgba(0,0,0,.075);
+  }
+  
+  .list-group-item.active {
+    z-index: 2;
+    background-color: lightyellow;
+    border-color: rgba(0, 0, 0, .125);
+    color: #007bff;
+  }
+  
+  .list-group-item.active a {
+    color: rgb(199, 180, 44);
+  }
+  
+  .list-group-item .active .content {
+    color: #007bff;
+  }
+  
+  .list-group-item .active small {
+    color: #6c757d;
+  }
+  
+  .pdf-placeholder {
+    background-color: #474747;
+  }
+  
+  .pdf-placeholder,
+  embed,
+  iframe {
+    width: 100%;
+    height: 75vh;
+  }
+  
+  iframe {
+    border: 0;
+  }
+  

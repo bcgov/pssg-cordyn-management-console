@@ -1,0 +1,20 @@
+<div class="container pb-4">
+    <ngx-loading [show]="busy" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+  <app-search (queryEvent)="onQuery($event)"
+    (changeQueueEvent)="onChangeQueueEvent($event)" ></app-search>
+
+    <app-search-cornet-list *ngIf="isCornetView()" [results]="results"
+      (requeueEvent)="onRequeueCornetEvent($event)"
+      (eventDeleteEvent)="onDeleteCornetEvent($event)"
+      (requeueLast1Hour)="onRequeueCornetLast1Hour($event)" 
+      (requeueLast24Hour)="onRequeueCornetLast24Hour($event)"
+      (requeueByDateRange)="onRequeueCornetByDateRange($event)" ></app-search-cornet-list>
+
+    <app-search-dynamics-list *ngIf="isDynamicsView()" [results]="results"
+      (requeueEvent)="onRequeueDynamicsEvent($event)"
+      (eventDeleteEvent)="onDeleteDynamicsEvent($event)"
+      (eventDeleteAllEvent)="onDeleteDynamicsAllEvents($event)"
+      (eventReqeueueAllEvent)="onRequeueDynamicsAllEvents($event)"></app-search-dynamics-list>
+
+</div>

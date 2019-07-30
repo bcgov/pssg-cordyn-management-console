@@ -1,0 +1,70 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~ngx-toastr/toastr.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+/**
+  nav-tab css must be specified at the top level (not in a component)
+**/
+
+.nav-tabs {
+  border-bottom: 1px solid rgba(230, 233, 236);
+}
+
+.nav-tabs .nav-link {
+  background-color: #f0f2f3;
+  border-color: rgba(230, 233, 236, 1);
+  color: rgba(0, 51, 102, .7);
+  transition: padding 0.10s ease;
+}
+
+.nav-tabs .nav-link:focus:not(.active):not(.disabled),
+.nav-tabs .nav-link:hover:not(.active):not(.disabled) {
+  border-color: rgba(0, 0, 0, .15);
+  border-bottom-color: rgba(230, 233, 236);
+  color: rgba(0, 51, 102, 1);
+  padding-top: .6rem;
+  padding-bottom: .4rem;
+}
+
+.nav-tabs .nav-link.disabled {
+  border-color: transparent;
+  color: rgba(0, 51, 102, .35);
+  cursor: not-allowed;
+}
+
+.nav-tabs .nav-link.active {
+  color: rgba(0, 51, 102);
+  border-color: rgba(230, 233, 236);
+  border-bottom: none;
+  background-color: white;
+}
+
+.container, .container-fluid {
+  /*
+  background-color: #f1f1f1;
+  */
+  font-family: "Roboto Slab", sans-serif;
+  padding-top: 20px;
+}
+
+.btn-primary {
+  background-color: #036;
+  border-color: #036;
+}
+
+.btn-outline-primary {
+  color: #036;
+  border: 1px solid #ced4da;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #036;
+  border-color: #036;
+}
+
+@media(max-width: 768px) {
+  button.full-mobile-width {
+      width: 100%;  
+  }
+}

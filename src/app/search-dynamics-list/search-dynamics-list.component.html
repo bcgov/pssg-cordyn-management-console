@@ -1,0 +1,82 @@
+  <!--
+  <ngx-loading [show]="busy" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+  {{results | json}}
+-->
+
+<div class="row pb-4">
+
+    <div class="col-md-12">
+      <div style="background-color: white" class="shadow rounded">
+
+        <div class="alert alert-warning m-0 my-3 pl-3" *ngIf="results && results.length === 0">
+          No events were found
+        </div>
+
+        <div id="searchResults" *ngIf="dataExists">
+          
+          <div class="shadow rounded mb-4">
+              <div class="row p-2">
+                <div class="offset-lg-3 col-lg-3 col-md-4 col-xs-12 py-2">
+                  <button (click)="performEventAllRequeue()" class="btn btn-sm btn-secondary btn-block">
+                    <i class="fa fa-hourglass mr-2"></i>Requeue All
+                  </button>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-12 py-2">
+                  <button (click)="performEventAllDelete()" class="btn btn-sm btn-danger btn-block">
+                    <i class="fa fa-calendar mr-2"></i>Delete All
+                  </button>
+                </div>
+            </div>
+          </div>
+
+          <i class="fa fa-bomb mx-2"></i>Dynamics Events <span *ngIf="results">({{results.length}})</span>
+          <div class="list-group">
+              <ng-container *ngFor="let rec of results; let i = index">
+              <div (click)="selectEvent(rec['event_id'])" class="list-group-item list-group-item-action flex-column align-items-start px-4 py-2"
+                  [ngClass]="{ 'active': isEventActive(rec['event_id'])}">
+
+                  <div class="row">
+                    <div class="col-md-2 pl-2"><span class="lead">{{rec['event_type_desc']}}</span></div>
+                    <div class="col-md-8 pl-2">
+                        <div class="lead mb-2">{{rec['event_id']}}<small class="float-right">{{rec['event_dtm']  | date:'medium' }}</small></div>
+                        
+                        <small>
+                          <table class="table table-sm table-hover mb-0">
+                            <tbody style="border: none;">
+                              <tr *ngFor="let rec of rec['event_data']; let i = index">
+                                <td style="border: none;">{{ rec['data_element_nm'] | uppercase }}</td>
+                                <td style="border: none;">{{ rec['data_value_txt'] }}</td>
+                              </tr>
+                              <tr *ngIf="rec['event_payload']">
+                                <td style="border: none;">PAYLOAD</td>
+                                <td style="border: none;">
+                                  <table class="table table-sm mb-0" style="background-color: transparent;">
+                                    <tbody>
+                                      <tr *ngFor="let item of rec['event_payload'] | keyvalue">
+                                        <td style="border: none;">{{ item.key | uppercase }}</td>
+                                        <td style="border: none;">{{ item.value }}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </small>
+                    </div>
+                    <div class="col-md-2 pl-2">
+                        <button (click)="performEventDelete(rec['event_id'])" class="btn btn-sm btn-outline-danger btn-block mt-2 mr-2">
+                            <i class="fa fa-trash mr-2"></i>Delete
+                        </button>
+                        <button (click)="performRequeueEvent(rec['event_id'])" class="btn btn-sm btn-outline-primary btn-block mt-2">
+                            <i class="fa fa-redo mr-2"></i>Requeue
+                        </button>
+                    </div>
+                  </div>
+              </div>
+              </ng-container>
+          </div>  
+        </div>  
+      </div>
+    </div>
+  </div>

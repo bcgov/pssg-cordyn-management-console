@@ -1,0 +1,75 @@
+  <div class="row pb-4">
+
+    <div class="col-md-12">
+      <div style="background-color: white" class="shadow rounded">
+
+        <div class="alert alert-warning m-0 my-3 pl-3" *ngIf="results && results.length === 0">
+          No events were found
+        </div>
+
+        <div id="searchResults" *ngIf="dataExists">
+          <div class="shadow rounded mb-4">
+              <div class="row p-2">
+                <div class="offset-lg-2 col-lg-3 col-md-4 col-xs-12 py-2">
+                  <button (click)="performRequeueLast1Hour()" class="btn btn-sm btn-secondary btn-block">
+                    <i class="fa fa-hourglass mr-2"></i>Requeue Last Hour
+                  </button>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-12 py-2">
+                  <button (click)="performRequeueLast24Hour()" class="btn btn-sm btn-secondary btn-block">
+                    <i class="fa fa-calendar mr-2"></i>Requeue Last 24 Hours
+                  </button>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-12 py-2">
+                  <button (click)="performRequeueByDateRange()" class="btn btn-sm btn-secondary btn-block">
+                    <i class="fa fa-calendar-alt mr-2"></i>Requeue By Date Range
+                  </button>
+                </div>
+            </div>
+          </div>
+
+          <i class="fa fa-list mx-2"></i>Cornet Events <span *ngIf="results">({{results.length}})</span>
+
+          <div class="list-group">
+              <ng-container *ngFor="let rec of results; let i = index">
+                <div (click)="selectEvent(rec['event_message_id'])" class="list-group-item list-group-item-action flex-column align-items-start px-4 py-2"
+                    [ngClass]="{ 'active': isEventActive(rec['event_message_id'])}">
+                  <div class="row">
+                    <div class="col-md-2 pl-2"><span class="lead">{{rec['message_event_type_dsc']}}</span>
+                      <!-- <i class="fa fa-gavel fa-2x mr-2"></i> -->
+                    </div>
+                    <div class="col-md-8 pl-2">
+                        <div class="lead">{{rec['event_message_id']}}                          
+                          <small class="float-right">{{rec['event_dtm']  | date:'medium' }}</small>
+                        </div>
+                        <small>
+                          <table class="table table-sm table-hover mb-0">
+                            <tbody style="border-top: 1px solid #dee2e6;">
+                              <tr *ngFor="let rec of rec['event_data']; let i = index">
+                                <td style="border: none;">{{ rec['data_element_nm'] | uppercase }}</td>
+                                <td style="border: none;">{{ rec['data_value_txt'] }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </small>
+                    </div>
+                    <div class="col-md-2 pl-2">
+                        <div class="badge badge-light float-right">Retry: {{rec['process_retry_qty']}} / {{rec['maximum_retry_qty']}}</div><br/>
+                        <div [ngClass]="getStatusClass(rec['process_status_cd'])">{{rec['process_status_dsc']}}</div><br/>  
+                        <div class="float-right">
+                            <button *ngIf="rec['process_status_cd'] === 'ERR'" (click)="performEventDelete(rec['event_message_id'])" class="btn btn-sm btn-outline-danger btn-block mt-2 mr-2">
+                                <i class="fa fa-trash mr-2"></i>Delete
+                            </button>
+                            <button (click)="performRequeueEvent(rec['event_message_id'])" class="btn btn-sm btn-outline-primary btn-block mt-2">
+                              <i class="fa fa-redo mr-2"></i>Requeue
+                            </button>
+                        </div>        
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>  
+          </div>            
+      </div>
+    </div>
+  </div>

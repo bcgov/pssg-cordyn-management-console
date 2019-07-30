@@ -1,0 +1,72 @@
+<ngx-loading [show]="busy" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+<form [formGroup]="form" (ngSubmit)="performSearch()" novalidate>
+
+  <div class="form-row col-md-12">
+      <div class="d-none d-md-block col-md-2" style="top: -20px;">
+        <img [routerLink]="['/search']" class="img-fluid d-none d-md-block"
+          src="assets/images/BCID_Supported_H_RGB_pos.png"
+          alt="B.C. Government Logo">
+      </div>
+      <div class="col-sm-12 col-md-7">
+          <div class="input-group pl-0">
+            <input class="form-control py-2 no-border-right" formControlName="searchString" type="search" id="searchBy" autocomplete="none"
+              placeholder="{{searchByPlaceholder}}">
+            <!-- 
+            <span (click)="clearField()" class="clearField fa fa-times"></span>
+            -->
+            <span class="input-group-append">
+                <button class="btn btn-outline-primary no-border-left xxx" type="button" (click)="clearField()">
+                  <i class="fa fa-times"></i>
+                </button>
+
+                <div ngbDropdown class="d-inline-block" *ngIf="isCornet()">
+                  <button class="btn btn-outline-primary" type="button" id="dropdownBasic1" ngbDropdownToggle>{{statusLabel()}}</button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button type="button" (click)="setSearchByStatus('')"  class="dropdown-item">All</button>
+                    <button type="button" (click)="setSearchByStatus('NEW')"  class="dropdown-item">New</button>
+                    <button type="button" (click)="setSearchByStatus('INP')"  class="dropdown-item">In Progress</button>
+                    <button type="button" (click)="setSearchByStatus('PRC')"  class="dropdown-item">Processed</button>
+                    <button type="button" (click)="setSearchByStatus('ERR')"  class="dropdown-item">Error</button>
+                  </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+            </span>
+          </div>
+      </div>
+      <div class="col-sm-12 col-md-3">
+        <div class="btn-group float-md-right">
+          <button type="button" class="btn btn-outline-primary" (click)="changeToCornetQueue()" [ngClass]="{ 'active': isCornet() }">Cornet</button>
+          <button type="button" class="btn btn-outline-primary" (click)="changeToDynamicsQueue()" [ngClass]="{ 'active': isDynamics() }">Dynamics</button>
+        </div>
+      </div>
+  </div> 
+
+    <!--
+    <small class="form-text" style="color: #0056b3;" *ngIf="selectedTags">
+      Search results are filtered by: {{selectedTags}}
+    </small>
+    <div class="alert alert-warning m-0 my-3 pl-3" *ngIf="displayNoSearchResults">
+      No data was found matching your Event Id or GUID
+    </div>
+    -->
+    
+    <!--
+    <div class="d-none d-md-block col-md-3" style="top: -30px;">
+      <div class="float-right">
+        <a href="javascript:void(0)" class="nav-link">
+          User Name
+          <i class="fa fa-angle-down"></i>
+          <i class="fa fa-user-circle fa-3x ml-2" style="position: relative; top: 15px;"></i>
+        </a>
+      </div>
+    </div>
+    -->
+
+
+
+  <div class="row d-md-none">&nbsp;</div>
+</form>
