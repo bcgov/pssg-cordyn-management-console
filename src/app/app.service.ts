@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EnvService } from '../env.service';
+import { EnvService } from './env.service';
 import { Observable, pipe, Subject } from 'rxjs';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';

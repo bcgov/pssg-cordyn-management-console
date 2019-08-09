@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { EnvServiceProvider } from './env.service.provider';
 import * as moment from 'moment';
 
 import { AppComponent } from './app.component';
