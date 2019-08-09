@@ -60,7 +60,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     MatButtonToggleModule, MatInputModule, MatNativeDateModule,
     MatDatepickerModule,
     MatExpansionModule,
@@ -71,11 +71,12 @@ const appRoutes: Routes = [
     ToastrModule.forRoot() // ToastrModule added
   ],
   providers: [
-    AppService
+    AppService,
+    EnvServiceProvider
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    ConfirmationDialogComponent, 
+    ConfirmationDialogComponent,
     DateRangeDialogComponent]
 })
 export class AppModule { }

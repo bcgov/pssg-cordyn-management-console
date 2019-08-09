@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
+import { EnvService } from '../env.service';
 import { Observable, pipe, Subject } from 'rxjs';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as moment from 'moment';
+
 
 @Injectable()
 export class AppService {
@@ -18,7 +20,7 @@ export class AppService {
 
   private cachedData: Observable<any> = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private env: EnvService) { }
 
   public get searchString(): string {
     return this.cachedSearchString;
@@ -81,7 +83,7 @@ export class AppService {
     console.log('appService searchCornet', searchString, searchProcessCode);
 
     if (!searchString) {
-      return this.http.get(`https://dev.jag.gov.bc.ca/ords/devc/cmsords/web/queueEvents?process_status_cd=${searchProcessCode}`)
+      return this.http.get(env.ordsURL+`queueEvents?process_status_cd=${searchProcessCode}`)
         .pipe(
           map((resp: HttpResponse<any>) => {
             console.log('search results', resp);
@@ -89,7 +91,7 @@ export class AppService {
           })
         );
     } else {
-      return this.http.get(`https://dev.jag.gov.bc.ca/ords/devc/cmsords/web/eventByIdOrGuid?id_or_guid=${searchString}`)
+      return this.http.get(env.ordsURL+`eventByIdOrGuid?id_or_guid=${searchString}`)
       .pipe(
         map((resp: HttpResponse<any>) => {
           console.log('search results', searchString, resp);
@@ -100,7 +102,7 @@ export class AppService {
   }
 
   requeueLastHour(): Observable<any> {
-    return this.http.get('https://dev.jag.gov.bc.ca/ords/devc/cmsords/web/requeueEventsLast1Hour')
+    return this.http.get(env.ordsURL+'requeueEventsLast1Hour')
     .pipe(
       map((resp: HttpResponse<any>) => {
         // if (resp['respCd'] === 0) {
@@ -112,7 +114,7 @@ export class AppService {
   }
 
   requeueLast24Hour(): Observable<any> {
-    return this.http.get('https://dev.jag.gov.bc.ca/ords/devc/cmsords/web/requeueEventsLast24Hours')
+    return this.http.get(env.ordsURL+'requeueEventsLast24Hours')
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -121,7 +123,7 @@ export class AppService {
   }
 
   requeueEventById(eventMessageId: number): Observable<any> {
-    return this.http.get(`https://dev.jag.gov.bc.ca/ords/devc/cmsords/web/requeueEventById?id=${eventMessageId}`)
+    return this.http.get(env.ordsURL+`requeueEventById?id=${eventMessageId}`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -129,11 +131,11 @@ export class AppService {
     );
   }
 
-  requeueEventByDateRange(startDate: Date, endDate: Date): Observable<any> {    
+  requeueEventByDateRange(startDate: Date, endDate: Date): Observable<any> {
     var startDateStr = moment(startDate).format("YYYY-MM-DD");
     var endDateStr = moment(endDate).format("YYYY-MM-DD");
 
-    return this.http.get(`https://dev.jag.gov.bc.ca/ords/devc/cmsords/web/requeueEventsByDtRange?from_dt=${startDateStr}&to_dt=${endDateStr}`)
+    return this.http.get(env.ordsURL+`requeueEventsByDtRange?from_dt=${startDateStr}&to_dt=${endDateStr}`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -142,13 +144,13 @@ export class AppService {
   }
 
   deleteCornetEvent(eventMessageId: string): Observable<any> {
-    return this.http.delete(`https://dev.jag.gov.bc.ca/ords/devc/cmsords/web/event?id=${eventMessageId}`)
+    return this.http.delete(env.ordsURL+`event?id=${eventMessageId}`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
       })
     );
-  }  
+  }
 
 //----------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
@@ -158,55 +160,55 @@ export class AppService {
     console.log('appService searchDynamics', searchString);
 
     if (!searchString) {
-      return this.http.get('http://cordyn-rabbitmq-interface-controller-route-wyck1k-dev.pathfinder.gov.bc.ca/api/Rabbit/messages')
+      return this.http.get(env.rabbitInterfaceControllerUrl+'api/Rabbit/messages')
       .pipe(
         map((resp: HttpResponse<any>) => {
            console.log('search results', resp);
-  
+
            return resp;
         })
-      );    
+      );
     } else {
-      return this.http.get(`http://cordyn-rabbitmq-interface-controller-route-wyck1k-dev.pathfinder.gov.bc.ca/api/Rabbit/message?id=${searchString}`)
+      return this.http.get(env.rabbitInterfaceControllerUrl+`api/Rabbit/message?id=${searchString}`)
       .pipe(
         map((resp: HttpResponse<any>) => {
            console.log('search results', resp);
-  
+
            return resp;
         })
-      );    
-    }    
-  }  
+      );
+    }
+  }
 
   requeueDynamicsAllEvents(): Observable<any> {
-    return this.http.post(`http://cordyn-rabbitmq-interface-controller-route-wyck1k-dev.pathfinder.gov.bc.ca/api/Rabbit/requeueall`, '')
+    return this.http.post(env.rabbitInterfaceControllerUrl+`api/Rabbit/requeueall`, '')
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
       })
     );
-  } 
+  }
 
   requeueDynamicsEventById(eventMessageId: number): Observable<any> {
-    return this.http.post(`http://cordyn-rabbitmq-interface-controller-route-wyck1k-dev.pathfinder.gov.bc.ca/api/Rabbit/requeue?id=${eventMessageId}`, '')
+    return this.http.post(env.rabbitInterfaceControllerUrl+`api/Rabbit/requeue?id=${eventMessageId}`, '')
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
       })
     );
-  } 
+  }
 
   deleteDynamicsEvent(eventMessageId: string): Observable<any> {
-    return this.http.delete(`http://cordyn-rabbitmq-interface-controller-route-wyck1k-dev.pathfinder.gov.bc.ca/api/Rabbit/deletemessage?id=${eventMessageId}`)
+    return this.http.delete(env.rabbitInterfaceControllerUrl+`api/Rabbit/deletemessage?id=${eventMessageId}`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
       })
     );
-  }  
+  }
 
   deleteDynamicsAllEvents(): Observable<any> {
-    return this.http.delete(`http://cordyn-rabbitmq-interface-controller-route-wyck1k-dev.pathfinder.gov.bc.ca/api/Rabbit/deletemessages`)
+    return this.http.delete(env.rabbitInterfaceControllerUrl+`api/Rabbit/deletemessages`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -235,4 +237,3 @@ export class AppService {
     // this.dataChange.next(data);
   }
 }
-
