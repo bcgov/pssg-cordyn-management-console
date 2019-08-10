@@ -83,7 +83,7 @@ export class AppService {
     console.log('appService searchCornet', searchString, searchProcessCode);
 
     if (!searchString) {
-      return this.http.get(env.ordsURL+`queueEvents?process_status_cd=${searchProcessCode}`)
+      return this.http.get(this.env.ordsURL+`queueEvents?process_status_cd=${searchProcessCode}`)
         .pipe(
           map((resp: HttpResponse<any>) => {
             console.log('search results', resp);
@@ -91,7 +91,7 @@ export class AppService {
           })
         );
     } else {
-      return this.http.get(env.ordsURL+`eventByIdOrGuid?id_or_guid=${searchString}`)
+      return this.http.get(this.env.ordsURL+`eventByIdOrGuid?id_or_guid=${searchString}`)
       .pipe(
         map((resp: HttpResponse<any>) => {
           console.log('search results', searchString, resp);
@@ -102,7 +102,7 @@ export class AppService {
   }
 
   requeueLastHour(): Observable<any> {
-    return this.http.get(env.ordsURL+'requeueEventsLast1Hour')
+    return this.http.get(this.env.ordsURL+'requeueEventsLast1Hour')
     .pipe(
       map((resp: HttpResponse<any>) => {
         // if (resp['respCd'] === 0) {
@@ -114,7 +114,7 @@ export class AppService {
   }
 
   requeueLast24Hour(): Observable<any> {
-    return this.http.get(env.ordsURL+'requeueEventsLast24Hours')
+    return this.http.get(this.env.ordsURL+'requeueEventsLast24Hours')
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -123,7 +123,7 @@ export class AppService {
   }
 
   requeueEventById(eventMessageId: number): Observable<any> {
-    return this.http.get(env.ordsURL+`requeueEventById?id=${eventMessageId}`)
+    return this.http.get(this.env.ordsURL+`requeueEventById?id=${eventMessageId}`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -135,7 +135,7 @@ export class AppService {
     var startDateStr = moment(startDate).format("YYYY-MM-DD");
     var endDateStr = moment(endDate).format("YYYY-MM-DD");
 
-    return this.http.get(env.ordsURL+`requeueEventsByDtRange?from_dt=${startDateStr}&to_dt=${endDateStr}`)
+    return this.http.get(this.env.ordsURL+`requeueEventsByDtRange?from_dt=${startDateStr}&to_dt=${endDateStr}`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -144,7 +144,7 @@ export class AppService {
   }
 
   deleteCornetEvent(eventMessageId: string): Observable<any> {
-    return this.http.delete(env.ordsURL+`event?id=${eventMessageId}`)
+    return this.http.delete(this.env.ordsURL+`event?id=${eventMessageId}`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -160,7 +160,7 @@ export class AppService {
     console.log('appService searchDynamics', searchString);
 
     if (!searchString) {
-      return this.http.get(env.rabbitInterfaceControllerUrl+'api/Rabbit/messages')
+      return this.http.get(this.env.rabbitInterfaceControllerUrl+'api/Rabbit/messages')
       .pipe(
         map((resp: HttpResponse<any>) => {
            console.log('search results', resp);
@@ -169,7 +169,7 @@ export class AppService {
         })
       );
     } else {
-      return this.http.get(env.rabbitInterfaceControllerUrl+`api/Rabbit/message?id=${searchString}`)
+      return this.http.get(this.env.rabbitInterfaceControllerUrl+`api/Rabbit/message?id=${searchString}`)
       .pipe(
         map((resp: HttpResponse<any>) => {
            console.log('search results', resp);
@@ -181,7 +181,7 @@ export class AppService {
   }
 
   requeueDynamicsAllEvents(): Observable<any> {
-    return this.http.post(env.rabbitInterfaceControllerUrl+`api/Rabbit/requeueall`, '')
+    return this.http.post(this.env.rabbitInterfaceControllerUrl+`api/Rabbit/requeueall`, '')
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -190,7 +190,7 @@ export class AppService {
   }
 
   requeueDynamicsEventById(eventMessageId: number): Observable<any> {
-    return this.http.post(env.rabbitInterfaceControllerUrl+`api/Rabbit/requeue?id=${eventMessageId}`, '')
+    return this.http.post(this.env.rabbitInterfaceControllerUrl+`api/Rabbit/requeue?id=${eventMessageId}`, '')
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -199,7 +199,7 @@ export class AppService {
   }
 
   deleteDynamicsEvent(eventMessageId: string): Observable<any> {
-    return this.http.delete(env.rabbitInterfaceControllerUrl+`api/Rabbit/deletemessage?id=${eventMessageId}`)
+    return this.http.delete(this.env.rabbitInterfaceControllerUrl+`api/Rabbit/deletemessage?id=${eventMessageId}`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -208,7 +208,7 @@ export class AppService {
   }
 
   deleteDynamicsAllEvents(): Observable<any> {
-    return this.http.delete(env.rabbitInterfaceControllerUrl+`api/Rabbit/deletemessages`)
+    return this.http.delete(this.env.rabbitInterfaceControllerUrl+`api/Rabbit/deletemessages`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
