@@ -102,7 +102,7 @@ export class AppService {
   }
 
   requeueLastHour(): Observable<any> {
-    return this.http.get(this.env.ordsURL+'requeueEventsLast1Hour')
+    return this.http.get(this.env.ordsURL+'requeueEventsLast1Hour?system=CDF')
     .pipe(
       map((resp: HttpResponse<any>) => {
         // if (resp['respCd'] === 0) {
@@ -114,7 +114,7 @@ export class AppService {
   }
 
   requeueLast24Hour(): Observable<any> {
-    return this.http.get(this.env.ordsURL+'requeueEventsLast24Hours')
+    return this.http.get(this.env.ordsURL+'requeueEventsLast24Hours?system=CDF')
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
@@ -135,7 +135,7 @@ export class AppService {
     var startDateStr = moment(startDate).format("YYYY-MM-DD");
     var endDateStr = moment(endDate).format("YYYY-MM-DD");
 
-    return this.http.get(this.env.ordsURL+`requeueEventsByDtRange?from_dt=${startDateStr}&to_dt=${endDateStr}`)
+    return this.http.get(this.env.ordsURL+`requeueEventsByDtRange?from_dt=${startDateStr}&to_dt=${endDateStr}&system=CDF`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
