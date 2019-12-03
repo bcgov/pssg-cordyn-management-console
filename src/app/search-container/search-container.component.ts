@@ -83,6 +83,8 @@ export class SearchContainerComponent implements OnInit {
             }
           }
 
+          // sorted on the server side
+          
           this.busy = false;
         },
         (error: any) => {
@@ -194,7 +196,8 @@ export class SearchContainerComponent implements OnInit {
         });  
   }
 
-  private getEventTypeDesc(cd: string): string {    
+  private getEventTypeDesc(cd: string): string {   
+    // TODO use code table 
     switch (cd) {
       case 'TOMBSTONE': return 'Tombstone';
       case 'DISC_CHRG': return 'Disciplinary Charge';
@@ -253,6 +256,26 @@ export class SearchContainerComponent implements OnInit {
               }
             }
           }
+
+          this.results.sort(function (a, b) {
+            var date1 = a['event_dtm'];
+            var date2 = b['event_dtm'];
+
+            if (!date1) {
+              date1 = new Date('1900-01-01');
+            } else {
+              date1 = new Date(date1);
+            }
+
+            if (!date2) {
+              date2 = new Date('1900-01-01');
+            } else {
+              date2 = new Date(date2);
+            }
+
+            return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+          });
+
           this.busy = false;
         },
         (error: any) => {

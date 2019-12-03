@@ -35,7 +35,7 @@
                 <div (click)="selectEvent(rec['event_message_id'])" class="list-group-item list-group-item-action flex-column align-items-start px-4 py-2"
                     [ngClass]="{ 'active': isEventActive(rec['event_message_id'])}">
                   <div class="row">
-                    <div class="col-md-2 pl-2"><span class="lead">{{rec['message_event_type_dsc']}}</span>
+                    <div class="col-md-2 pl-2"><span class="lead">{{rec['message_event_type_dsc']}}</span>&nbsp;<small>{{rec['target_system_cd']}}</small>
                       <!-- <i class="fa fa-gavel fa-2x mr-2"></i> -->
                     </div>
                     <div class="col-md-8 pl-2">
