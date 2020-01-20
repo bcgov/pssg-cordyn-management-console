@@ -239,12 +239,16 @@ export class SearchContainerComponent implements OnInit {
 
             entry['event_data'] = [];
             entry['event_payload'] = null;
+            entry['event_dtm'] = null;
+            if (entry['properties'] && entry['properties']['headers']) {
+              entry['event_dtm'] = entry['properties']['headers']['date'];
+            }
 
             var payload : any = JSON.parse(entry['payload']);
             // console.log('jsonObject', payload);
             
             for (let key in payload) {
-              //console.log('key/value pair', key, payload[key]); 
+              // console.log('payload key/value pair', key, payload[key]); 
 
               if (payload[key]) {
                 if (key === 'event_id') {
