@@ -208,9 +208,17 @@ export class SearchContainerComponent implements OnInit {
       case 'LOCATION': return 'Location';
       case 'PECH_XREF': return 'Personal Characteristics Xref';
       case 'CLIENT_IA': return 'Client Inmate Assessment';
+      case 'CREATE_IA': return 'Create Client IA';
       case 'ACT': return 'Act';
       case 'CLIE_MRGE': return 'Client Merge';
-      default: return 'Unknown';
+      case 'CLIE_SRCH': return 'Client Search';
+      case 'KEY_DATE': return 'Key Date';
+      case 'MOVEMENT': return 'Movement';
+      case 'HEARING': return 'Hearing';
+      case 'STATE_TRAN': return 'State Transition';
+      case 'VICT_CNTCT': return 'Victim Contact';
+      case 'AUTH_DOCM': return 'Authority Document';
+      default: return cd;
     }
   }
 
