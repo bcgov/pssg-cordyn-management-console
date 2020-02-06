@@ -290,9 +290,14 @@ export class SearchContainerComponent implements OnInit {
 
           this.busy = false;
         },
-        (error: any) => {
+        (error: any) => { // HttpErrorResponse
           console.log('queryDynamicsData error: ', error);
-          this.toastr.error('Server error... unable to retrieve the events');
+
+          if (error.status == 404) {
+            this.results = [];
+          } else {
+            this.toastr.error('Server error... unable to retrieve the events');
+          }
           this.busy = false;
         }
       );
