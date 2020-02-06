@@ -83,7 +83,7 @@ export class AppService {
     console.log('appService searchCornet', searchString, searchProcessCode);
 
     if (!searchString) {
-      return this.http.get(this.env.ordsURL+`queueEvents?process_status_cd=${searchProcessCode}`)
+      return this.http.get(this.env.ordsURL+`queueEvents?system=CDF&process_status_cd=${searchProcessCode}`)
         .pipe(
           map((resp: HttpResponse<any>) => {
             console.log('search results', resp);
@@ -91,7 +91,7 @@ export class AppService {
           })
         );
     } else {
-      return this.http.get(this.env.ordsURL+`eventByIdOrGuid?id_or_guid=${searchString}`)
+      return this.http.get(this.env.ordsURL+`eventByIdOrGuid?system=CDF&id_or_guid=${searchString}`)
       .pipe(
         map((resp: HttpResponse<any>) => {
           console.log('search results', searchString, resp);
@@ -135,7 +135,7 @@ export class AppService {
     var startDateStr = moment(startDate).format("YYYY-MM-DD");
     var endDateStr = moment(endDate).format("YYYY-MM-DD");
 
-    return this.http.get(this.env.ordsURL+`requeueEventsByDtRange?from_dt=${startDateStr}&to_dt=${endDateStr}&system=CDF`)
+    return this.http.get(this.env.ordsURL+`requeueEventsByDtRange?system=CDF&from_dt=${startDateStr}&to_dt=${endDateStr}&system=CDF`)
     .pipe(
       map((resp: HttpResponse<any>) => {
         return resp;
