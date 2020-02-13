@@ -124,7 +124,7 @@ export class SearchContainerComponent implements OnInit {
         resp => {
           console.log(`onRequeueCornetLast1Hour response: ${JSON.stringify(resp, null, 1)}`);
 
-          this.toastr.success('Failed events from the last hour have been successfully re-queued');
+          this.toastr.success('Failed events from the last hour have been successfully requeued');
           this.busy = false;
         },
         (error: any) => {
@@ -144,7 +144,7 @@ export class SearchContainerComponent implements OnInit {
         resp => {
           console.log(`onRequeueCornetLast24Hour response: ${JSON.stringify(resp, null, 1)}`);
 
-          this.toastr.success('Failed events from the last 24 hours have been successfully re-queued');
+          this.toastr.success('Failed events from the last 24 hours have been successfully requeued');
           this.busy = false;
         },
         (error: any) => {
@@ -164,7 +164,7 @@ export class SearchContainerComponent implements OnInit {
         resp => {
           console.log(`onRequeueCornetEvent response: ${JSON.stringify(resp, null, 1)}`);
           
-          this.toastr.success('Event ' + eventMessageId + ' has been successfully re-queued');
+          this.toastr.success('Event ' + eventMessageId + ' has been successfully requeued');
           this.busy = false;
         },
         (error: any) => {
@@ -185,7 +185,7 @@ export class SearchContainerComponent implements OnInit {
         resp => {
           console.log(`onRequeueCornetByDateRange response: ${JSON.stringify(resp, null, 1)}`);
             
-          this.toastr.success('Failed events within the date range have been successfully re-queued');
+          this.toastr.success('Failed events within the date range have been successfully requeued');
           this.busy = false;
         },
         (error: any) => {
@@ -257,7 +257,9 @@ export class SearchContainerComponent implements OnInit {
                   entry['event_type'] = payload[key];
                   entry['event_type_desc'] = this.getEventTypeDesc(entry['event_type']);
                 } else if (key === 'event_dtm') {
-                  entry['event_dtm'] = payload[key];
+                  if (payload[key] != 'null') {
+                    entry['event_dtm'] = payload[key];
+                  }
                 } else if (key === 'payload') {
                   //entry['payload'] = [];
                   //console.log('key/payload', key, payload[key]);
@@ -312,7 +314,7 @@ export class SearchContainerComponent implements OnInit {
         resp => {
           console.log(`onRequeueDynamicsEvent response: ${JSON.stringify(resp, null, 1)}`);
             
-          this.toastr.success('Event ' + eventMessageId + ' has been successfully re-queued');
+          this.toastr.success('Event ' + eventMessageId + ' has been successfully requeued');
           this.busy = false;
         },
         (error: any) => {
@@ -372,7 +374,7 @@ export class SearchContainerComponent implements OnInit {
         resp => {
           console.log(`onRequeueDynamicsAllEvents response: ${JSON.stringify(resp, null, 1)}`);
             
-          this.toastr.success('All events has been successfully re-queued');
+          this.toastr.success('All events has been successfully requeued');
           this.busy = false;
         },
         (error: any) => {

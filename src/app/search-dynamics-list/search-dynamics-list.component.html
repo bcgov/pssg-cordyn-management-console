@@ -38,7 +38,10 @@
                   <div class="row">
                     <div class="col-md-2 pl-2"><span class="lead">{{rec['event_type_desc']}}</span></div>
                     <div class="col-md-8 pl-2">
-                        <div class="lead mb-2">{{rec['event_id']}}<small class="float-right">{{rec['event_dtm']  | date:'medium' }}</small></div>
+                        <div class="lead mb-2">
+                          {{rec['event_id']}}
+                          <small class="float-right" *ngIf="rec['event_dtm']">{{rec['event_dtm'] }}</small>
+                        </div>
                         
                         <small>
                           <table class="table table-sm table-hover mb-0">
